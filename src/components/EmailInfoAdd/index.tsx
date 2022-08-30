@@ -87,8 +87,14 @@ const EmailInfoAdd: React.FC<DemoFormProps> = (props) => {
             helperText={props.errors.email1}
             error={Boolean(props.errors.email1)}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (event.target.value.match(emailRegex)) {
-                props.handleChange(event);
+              if (!event.target.value.match(emailRegex)) {
+                props.setErrors((prev) => ({
+                  ...prev,
+                  email1: "Invalid email",
+                }));
+              } else {
+                props.errors.email1 = "";
+                return props.handleChange(event);
               }
             }}
           />

@@ -144,16 +144,19 @@ const BasicInfoAdd: React.FC<DemoFormProps> = (props) => {
               style: { fontSize: "12px", padding: "0px 10px" },
             }}
             className={classes.inputField}
-            helperText={props.errors.phoneNo}
-            error={Boolean(props.errors.phoneNo)}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (event.target.value.match(phoneNoRegex)) {
-                props.errors.phoneNo = "";
-                props.handleChange(event);
+              if (!event.target.value.match(phoneNoRegex)) {
+                props.setErrors((prev) => ({
+                  ...prev,
+                  phoneNo: "Invalid phone number",
+                }));
               } else {
-                props.errors.phoneNo = "Please enter a valid phone number";
+                props.errors.phoneNo = "";
+                return props.handleChange(event);
               }
             }}
+            helperText={props.errors.phoneNo}
+            error={Boolean(props.errors.phoneNo)}
           />
         </div>
 
@@ -208,8 +211,14 @@ const BasicInfoAdd: React.FC<DemoFormProps> = (props) => {
             helperText={props.errors.postalCode}
             error={Boolean(props.errors.postalCode)}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (event.target.value.match(phoneNoRegex)) {
-                props.handleChange(event);
+              if (!event.target.value.match(phoneNoRegex)) {
+                props.setErrors((prev) => ({
+                  ...prev,
+                  postalCode: "Invalid Postal Code",
+                }));
+              } else {
+                props.errors.postalCode = "";
+                return props.handleChange(event);
               }
             }}
           />

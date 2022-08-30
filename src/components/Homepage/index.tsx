@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import BasicInfoAdd from "../BasicInfoAdd";
 import ContactInfoAdd from "../ContactInfoAdd";
 import { Employee } from "../model/model";
@@ -103,7 +103,7 @@ const initialError: ErrorType = {
   email2: "",
   email3: "",
   address1: "",
-  departmentName: "",
+  postalCode: "",
   remarks: "",
 };
 
@@ -112,8 +112,6 @@ const Homepage = () => {
   const [errors, setErrors] = React.useState<ErrorType>(initialError);
   const classes = useStyles();
 
-  const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   // ============================== Methods =========================
 
   /** 
@@ -121,7 +119,6 @@ const Homepage = () => {
       */
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
     setData((prev) => {
       return {
         ...prev,
@@ -148,7 +145,7 @@ const Homepage = () => {
       "lastName",
       "company",
       "address1",
-      "departmentName",
+      "postalCode",
       "email1",
       "email2",
       "email3",
@@ -173,17 +170,6 @@ const Homepage = () => {
     } else {
       copyErrors.address1 = "";
     }
-
-    // if (data.email1.match(emailRegex)) {
-    //   copyErrors.email1 = ``;
-    // } else if (data.email1 === "") {
-    //   copyErrors.email1 = "required";
-    //   hasError = true;
-    // } else {
-    //   copyErrors.email1 = "Invalid email";
-    //   hasError = true;
-    // }
-
     setErrors(copyErrors);
 
     return hasError;
